@@ -97,6 +97,12 @@ body {
 	cursor: pointer;
 }
 
+.button-object-active {
+	background-color: #0366D6;
+	color: #FFF;
+	cursor: pointer;
+}
+
 .button-object:focus {
 	box-shadow: 0 0 1px 2.5px rgba(3, 102, 214, 0.4);
 }

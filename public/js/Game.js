@@ -208,13 +208,24 @@ function resetMap() {
 	drawMap();
 }
 
+// REDO with PARAMS
 // Select objects from Object Selection
 function selectObjectWall() {
 	active_object = 'WALL';
+	let e = document.getElementsByClassName('button-object');
+	for (let i = 0; i < e.length; i++) {
+		e[i].classList.remove('button-object-active');
+	}
+	this.classList.add('button-object-active');
 }
 
 function selectObjectPoint() {
 	active_object = 'POINT';
+	let e = document.getElementsByClassName('button-object');
+	for (let i = 0; i < e.length; i++) {
+		e[i].classList.remove('button-object-active');
+	}
+	this.classList.add('button-object-active');
 }
 
 
