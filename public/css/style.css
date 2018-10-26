@@ -14,7 +14,7 @@ body {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-#menu {
+#left-menu {
 	display: block;
 	position: absolute;
 	top: 0;
@@ -26,7 +26,18 @@ body {
 
 }
 
-#menu button {
+#right-menu {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 15%;
+	height: 100%;
+	background-color: #F2F2F2;
+	border-left: 1px solid #D1D5DA;
+}
+
+#left-menu button {
 	width: 100%;
 	margin-top: 50px;
 	background-color: #403E57;
@@ -37,22 +48,76 @@ body {
 	transition: all .1s ease;
 }
 
-#menu button:hover {
+#left-menu button:hover {
 	background-color: #474560;
 	cursor: pointer;
 }
 
-#menu button:active {
+#left-menu button:active {
 	background-color: #5C597C
 }
 
 
 
+
+
+#right-menu-top-header {
+	border-bottom: 1px solid #D1D5DA; 
+	text-align: center;
+}
+
+#right-menu-top-header h1{
+	font-size: 22px;
+}
+
+#right-menu-middle {
+	text-align: center;
+}
+
+
+.button-object {
+	border: none;
+	background-color: transparent;
+	border: 1px solid #D1D5DA;
+	border-radius: 5px;
+	padding: 4px 35px;
+	font-size: 16px;
+	margin: 5px;
+	color: #0366D6;
+	transition: all .1s ease;
+}
+
+.button-object:first-child {
+	margin-top: 15px;
+}
+
+.button-object:hover {
+	background-color: #0366D6;
+	color: #FFF;
+	cursor: pointer;
+}
+
+.button-object:focus {
+	box-shadow: 0 0 1px 2.5px rgba(3, 102, 214, 0.4);
+}
+
+
+
+
+
+
+
+
+/* Grids */
 .blank-grid {
 	display: inline-block;
 	width: 24px;
 	height: 24px;
 	box-sizing: border-box;
+}
+
+.blank-grid:hover {
+	border: 1px solid #0366D6;
 }
 
 .default-grid {

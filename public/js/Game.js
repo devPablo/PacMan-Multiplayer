@@ -17,11 +17,22 @@ let buttonMenu = document.querySelector('#button-menu');
 buttonResetMap.addEventListener('click', resetMap);
 buttonLoadMap.addEventListener('click', loadMap);
 buttonSaveMap.addEventListener('click', saveMap);
-buttonMenu.addEventListener('click', menu);
+//buttonMenu.addEventListener('click', menu);
+
+// Objects
+let buttonObjectWall = document.querySelector('#button-object-wall');
+let buttonObjectPoint = document.querySelector('#button-object-point');
+
+buttonObjectWall.addEventListener('click', selectObjectWall);
+buttonObjectPoint.addEventListener('click', selectObjectPoint);
+
+
+
 
 let gs = 625; // Grid squares
 let map = [];
 let saved_maps = [];
+let active_object = 'WALL';
 
 drawMap();
 
@@ -70,12 +81,34 @@ let left_click_drag_flag = false;
 let right_click_drag_flag = false;
 
 // Create the grid on screen
-function createGrid(grid) {
-	grid.classList.add('wall-grid');
+function createGrid(grid, type) {
+	deleteGrid(grid);
 	grid.classList.remove('default-grid');
+	grid.classList.remove('wall-grid');
+	grid.classList.remove('point-grid');
+		
 
-	grid.style.border = '1px solid #BEBEBE';
-	grid.style.backgroundColor = '#e5e5e5';
+
+	switch (type) {
+		case 'WALL':
+			grid.classList.add('wall-grid');
+			grid.style.border = '1px solid #BEBEBE';
+			grid.style.backgroundColor = '#E5E5E5';
+			break;
+		case 'POINT':
+			let temp = document.createElement('div');
+			grid.classList.add('point-grid');
+			temp.style.backgroundColor = '#F8B090';
+			temp.style.borderRadius = '50%';
+			temp.style.padding = '10px';
+			temp.style.transform = 'scale(0.2)';
+			temp.style.position = 'absolute';
+			grid.appendChild(temp);
+			break;
+	}	
+	grid.addEventListener('mousedown', updateGrid);
+	grid.addEventListener('mouseover', mouseOverEvent);
+	grid.addEventListener('mouseup', mouseUpEvent);
 }
 
 // Delete the grid on screen
@@ -83,7 +116,9 @@ function deleteGrid(grid) {
 	grid.classList.remove('wall-grid');
 	grid.classList.add('default-grid');
 
-	grid.style.border = '1px solid #F1F1F1';
+	grid.removeAttribute('style');
+	grid.innerHTML = '';
+	grid.style.border = '1px solid #E5E5E5';
 	grid.style.backgroundColor = '#FFF';	
 }
 
@@ -92,13 +127,12 @@ function updateGrid(e) {
 	switch (e.button) {
 		case 0:
 			left_click_drag_flag = true;
-			createGrid(this);
+			createGrid(this, active_object);
 			
 			break;
 		case 2:
 			right_click_drag_flag = true;
-			deleteGrid(this);
-			
+			deleteGrid(this);	
 			break;
 	}		
 }
@@ -107,7 +141,7 @@ function updateGrid(e) {
 function mouseOverEvent(e) {
 	if (e.button == 0) {
 		if (left_click_drag_flag) {
-			createGrid(this);
+			createGrid(this, active_object);
 		}
 	}
 	if (e.buttons == 2) {
@@ -119,6 +153,7 @@ function mouseOverEvent(e) {
 
 // Checks for flag -> stop drawing
 function mouseUpEvent(e) {
+	console.log(e.button);
 	switch (e.button) {
 		case 0:
 			left_click_drag_flag = false;			
@@ -146,6 +181,9 @@ function saveMap(id, name) {
 		if (getGridClass(i).includes('wall-grid')) {
 			type = 'WALL';
 		}
+		if (getGridClass(i).includes('default-grid')) {
+			type = 'DEFAULT'
+		}
 
 		background = getGrid(i).style.backgroundColor;
 		border = getGrid(i).style.border;
@@ -169,6 +207,23 @@ function resetMap() {
 	map = [];
 	drawMap();
 }
+
+// Select objects from Object Selection
+function selectObjectWall() {
+	active_object = 'WALL';
+}
+
+function selectObjectPoint() {
+	active_object = 'POINT';
+}
+
+
+
+
+
+
+
+// Get information from HTML
 
 // Gets grid as object
 function getGrid(pos) {
