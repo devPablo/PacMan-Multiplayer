@@ -71,6 +71,7 @@ body {
 }
 
 #right-menu-middle {
+	position: relative;
 	text-align: center;
 }
 
@@ -105,6 +106,22 @@ body {
 
 .button-object:focus {
 	box-shadow: 0 0 1px 2.5px rgba(3, 102, 214, 0.4);
+}
+
+.div-object-counter {
+	position: absolute;
+	top: 20;
+	right: 40;
+	background-color: green;
+	height: 15px;
+	margin: 0 auto;
+`	margin-top: 5px;
+}
+
+.p-object-counter {	
+	line-height: 0;
+	font-size: 10px;
+	color: #000;
 }
 
 

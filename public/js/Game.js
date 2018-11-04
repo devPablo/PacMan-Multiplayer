@@ -5,7 +5,7 @@ window.onload=function() {
 
 // Variable initialization
 let c = document.querySelector('#mainBoard');
-c.addEventListener('mouseenter', mouseEnterEvent);
+c.addEventListener('mouseleave', mouseLeaveEvent);
 c.oncontextmenu = () => { return false; }
 c.ondragstart = () => { return false; }
 
@@ -17,7 +17,6 @@ let buttonMenu = document.querySelector('#button-menu');
 buttonResetMap.addEventListener('click', resetMap);
 buttonLoadMap.addEventListener('click', loadMap);
 buttonSaveMap.addEventListener('click', saveMap);
-//buttonMenu.addEventListener('click', menu);
 
 // Objects
 let buttonObjectWall = document.querySelector('#button-object-wall');
@@ -58,10 +57,23 @@ function drawMap() {
 	for (let i = 0; i < gs; i++) {
 		let wall = document.createElement('div');
 
+
+		
 		if (custom_map_flag) {
 			let grid = map[i];
-			wall.style.background = grid.background;
-			wall.style.border = grid.border;
+			// Check for object types
+			switch (map[i].type) {
+				case 'WALL':
+					createGrid(wall, 'WALL');
+					break;
+				case 'POINT':
+					createGrid(wall, 'POINT');
+					break;
+				default:
+					deleteGrid(wall);
+					break;
+			}
+			c.appendChild(wall);
 		} else {
 			wall.style.backgroundColor = '#FFF';
 			wall.style.border = '1px solid #E5E5E5';
@@ -83,13 +95,14 @@ let right_click_drag_flag = false;
 // Create the grid on screen
 function createGrid(grid, type) {
 	deleteGrid(grid);
-	grid.classList.remove('default-grid');
+	grid.classList.remove('empty-grid');
 	grid.classList.remove('wall-grid');
 	grid.classList.remove('point-grid');
-		
-
-
 	switch (type) {
+		case 'EMPTY':
+			wall.classList.add('empty-grid');
+			wall.style.backgroundColor = '#FFF';
+			wall.style.border = '1px solid #E5E5E5';
 		case 'WALL':
 			grid.classList.add('wall-grid');
 			grid.style.border = '1px solid #BEBEBE';
@@ -114,7 +127,8 @@ function createGrid(grid, type) {
 // Delete the grid on screen
 function deleteGrid(grid) {
 	grid.classList.remove('wall-grid');
-	grid.classList.add('default-grid');
+	grid.classList.remove('point-grid');
+	grid.classList.add('empty-grid');
 
 	grid.removeAttribute('style');
 	grid.innerHTML = '';
@@ -149,11 +163,10 @@ function mouseOverEvent(e) {
 			deleteGrid(this);
 		}
 	}
-}
+ }
 
 // Checks for flag -> stop drawing
 function mouseUpEvent(e) {
-	console.log(e.button);
 	switch (e.button) {
 		case 0:
 			left_click_drag_flag = false;			
@@ -165,7 +178,7 @@ function mouseUpEvent(e) {
 }
 
 // Checks if mouse has reached out of bounds
-function mouseEnterEvent() {
+function mouseLeaveEvent() {
 	left_click_drag_flag = false;
 	right_click_drag_flag = false;
 }
@@ -176,25 +189,40 @@ function saveMap(id, name) {
 	let type;
 	let background;
 	let border;
+	let borderRadius;
+	let padding;
+	let transform;
+	let position;
 	
 	for (let i = 0; i < gs; i++) {
+		background = getGrid(i).style.backgroundColor;
+
 		if (getGridClass(i).includes('wall-grid')) {
 			type = 'WALL';
+			border = getGrid(i).style.border
+		}
+		if (getGridClass(i).includes('point-grid')) {
+			type = 'POINT';
+			borderRadius = getGrid(i).childNodes[0].style.borderRadius;
+			padding = getGrid(i).childNodes[0].style.padding;
+			transform = getGrid(i).childNodes[0].style.transform;
+			position = getGrid(i).childNodes[0].style.position;
 		}
 		if (getGridClass(i).includes('default-grid')) {
-			type = 'DEFAULT'
+			type = 'DEFAULT';
 		}
-
-		background = getGrid(i).style.backgroundColor;
-		border = getGrid(i).style.border;
 		
 		let data = {
 			id: i,
 			type: type,
 			background: background,
-			border: border
+			border: border,
+			borderRadius: borderRadius,
+			padding: padding,
+			transform: transform,
+			position: position
 		}
-
+		type = null;
 		grid_data.push(data);
 	}
 	saved_maps.push(grid_data);
