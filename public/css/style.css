@@ -157,3 +157,21 @@ body {
 	*/	
 }
 
+.point-grid {
+	position: relative;
+}
+
+.point-grid div {
+	top: 1;
+	right: 1;
+}
+
+.pacman-grid {
+	position: relative;
+}
+
+.pacman-grid div {
+	top: 1;
+	right: 1;
+}
+
