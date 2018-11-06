@@ -306,6 +306,7 @@ function getGridClass(pos) {
 let player_one = null;
 let ready = false;
 let left, up, right, down = false;
+let queue = 'NONE';
 
 function game() {
 	if (ready) {
@@ -333,29 +334,55 @@ function play() {
 
 function keyPush(e) {
 	if (ready) {
-		left = false;
-		up = false;
-		right = false;
-		down = false;
+		updatePlayer();
+		let player_one_id = Number.parseInt(player_one.id);
 
 		// Left
 		if (e.keyCode == 37) {
-			left = true;
+			if (!getGridClass(player_one_id-1).includes('wall-grid')) {
+				resetDirection();
+				left = true;
+			} else {
+				left = false;
+				queue = 'LEFT';
+			}
 		}	
 
 		// Up
 		if (e.keyCode == 38) {
-			up = true;
+			if (!getGridClass(player_one_id-25).includes('wall-grid')) {
+				resetDirection();
+				up = true;
+			} else {
+				up = false;
+				queue = 'UP';
+			}
 		}
 
 		// Right
 		if (e.keyCode == 39) {
-			right = true;
+			if (!getGridClass(player_one_id+1).includes('wall-grid')) {
+				resetDirection();
+				right = true;
+			} else {
+				right = false;
+				queue = 'RIGHT';
+			}
 		}
 
 		// Down
 		if (e.keyCode == 40) {
-			down = true;
+			if (!getGridClass(player_one_id+25).includes('wall-grid')) {
+				resetDirection();
+				down = true;
+			} else {
+				down = false;
+				queue = 'DOWN';
+			}
+		}
+	} else {
+		if (e.keyCode == 38) {
+			play();
 		}
 	}
 }
@@ -406,35 +433,100 @@ function updatePlayer() {
 
 function movePlayer(dir) {
 	player_one = document.querySelector('.pacman-grid');
-	player_one.childNodes[0].style.transition = 'all .1s linear';	
+	player_one.childNodes[0].style.transition = 'all .1s ease-in-out';	
 	let player_one_id = Number.parseInt(player_one.id);
 	player_one.childNodes[0].style.top = 1;	
 	player_one.childNodes[0].style.right = 1;
 
 	if (dir == 'LEFT') {
 		if (!getGridClass(player_one_id-1).includes('wall-grid')) {
+			// QUEUE
+			if (checkQueue()) { return; }
+				
 			player_one.childNodes[0].style.right = Number.parseInt(player_one.childNodes[0].style.right)+24;
 			setTimeout(function(){ moveGrid(player_one_id, player_one_id-1); renderMap(); updatePlayer(); }, 100);
+		} else {
+			movePlayer(queue);
 		}
 	}
 	if (dir == 'UP') {
 		if (!getGridClass(player_one_id-25).includes('wall-grid')) {
+			// QUEUE
+			if (checkQueue()) { return; }
+
 			player_one.childNodes[0].style.top = Number.parseInt(player_one.childNodes[0].style.top)-26;
 			setTimeout(function(){ moveGrid(player_one_id, player_one_id-25); renderMap(); updatePlayer(); }, 100);
+		} else {
+			movePlayer(queue);
 		}
 	}
 	if (dir == 'RIGHT') {
 		if (!getGridClass(player_one_id+1).includes('wall-grid')) {
+			// QUEUE
+			if (checkQueue()) { return; }
+
 			player_one.childNodes[0].style.right = Number.parseInt(player_one.childNodes[0].style.right)-26;
 			setTimeout(function(){ moveGrid(player_one_id, player_one_id+1); renderMap(); updatePlayer(); }, 100);
+		} else {
+			movePlayer(queue);
 		}
 	} 
 	if (dir == 'DOWN') {
 		if (!getGridClass(player_one_id+25).includes('wall-grid')) {
+			// QUEUE
+			if (checkQueue()) { return; }
+
 			player_one.childNodes[0].style.top = Number.parseInt(player_one.childNodes[0].style.top)+24;
 			setTimeout(function(){ moveGrid(player_one_id, player_one_id+25); renderMap(); updatePlayer(); }, 100);
+		} else {
+			movePlayer(queue);
 		}
 	}
 	renderMap();
 	updatePlayer();
+}
+
+// Reset direction of player
+function resetDirection() {
+	left = false;
+	up = false;
+	right = false;
+	down = false;
+}
+
+function checkQueue() {
+	let player_one_id = Number.parseInt(player_one.id);
+	
+	if (queue == 'LEFT') {
+		if (!getGridClass(player_one_id-1).includes('wall-grid')) {
+			resetDirection();
+			left = true;
+			queue = 'NONE';
+			return true;
+		}
+	}
+	if (queue == 'UP') {
+		if (!getGridClass(player_one_id-25).includes('wall-grid')) {
+			resetDirection();
+			up = true;
+			queue = 'NONE';
+			return true;
+		}
+	}
+	if (queue == 'RIGHT') {
+		if (!getGridClass(player_one_id+1).includes('wall-grid')) {
+			resetDirection();
+			right = true;
+			queue = 'NONE';
+			return true;
+		}
+	}
+	if (queue == 'DOWN') {
+		if (!getGridClass(player_one_id+25).includes('wall-grid')) {
+			resetDirection();
+			down = true;
+			queue = 'NONE';
+			return true;
+		}
+	}
 }
