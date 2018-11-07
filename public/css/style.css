@@ -1,63 +1,139 @@
 body {
     margin: 0;
-    padding: 30px;
+    padding: 0;
     background: #F2F2F2;
-	font-family: 'Roboto', sans-serif;
+	font-family: Roboto, sans-serif;
+}
+
+#wrapper {
+    text-align: center;
+}
+
+#contextMenu {
+	position: absolute;
+	top: 50%;
+	right: 25%;
+	background-color: #FFF;
+	border-radius: 2px;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+#contextMenu ul {
+	list-style: none;
+	margin: 0;
+	padding: 10px 0;
+}
+
+#contextMenu ul li {
+	color: #171820;
+	font-size: 15px;
+	transition: all .1s ease;
+	padding: 10px 75px 10px 15px;
+	color: #444;
+}
+
+#contextMenu ul li:hover {
+	background-color: #F4F5F5;
+	cursor: pointer;
 }
 
 #mainBoard {
-    margin: 0 auto;
-    display: block;
+    display: inline-block;
+	margin: 50px auto;
 	width: 600px;
 	height: 600px;
     background-color: #FFF;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-#left-menu {
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 10%;
-	height: 100%;
-	background-color: #302E40;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-
-}
-
 #right-menu {
-	display: block;
-	position: absolute;
-	top: 0;
-	right: 0;
+	display: inline-block;
+	float: right;
 	width: 15%;
 	height: 100%;
 	background-color: #F2F2F2;
 	border-left: 1px solid #D1D5DA;
 }
 
+#left-menu {
+	position: relative;
+	display: inline-block;
+	float: left;
+	width: 10%;
+	height: 100%;
+	background-color: #33485F;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+#left-menu-top-header {
+	text-align: center;
+	background-color: #2d4056;
+}
+
+#left-menu-top-header h1 {
+	font-size: 22px;
+	color: #FFF;
+	padding: 15px;
+	margin: 0;
+	letter-spacing: .1px;
+}
+
+#left-menu-middle {
+	border-bottom: 1px solid #57718E;
+}
+
+.fas {
+	margin-right: 10px;
+	font-size: 14px;
+}
+
 #left-menu button {
+	text-align: justify;
 	width: 100%;
-	margin-top: 50px;
-	background-color: #403E57;
+	background-color: transparent;
 	border: none;
 	outline: none;
-	color: #FFF;
+	color: #CCC;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-family: Roboto, sans-serif;
+	font-weight: 600;
+	letter-spacing: .1px;
 	padding: 15px;
 	transition: all .1s ease;
 }
 
+#left-menu button:first-child {
+	margin-top: 10px;
+}
+
+#left-menu button:last-child {
+	margin-bottom: 10px;
+}
+
 #left-menu button:hover {
-	background-color: #474560;
+	background-color: #405872;
+	color: #FFF;
 	cursor: pointer;
+	transition: all .1s ease;
 }
 
 #left-menu button:active {
-	background-color: #5C597C
+	background-color: #49637F;
 }
 
+footer {
+	position: absolute;
+	bottom: 0;
+	background-color: #293b4F;
+	height: 50px;
+	width: 100%;
+}
 
+footer p {
+	font-size: 14px;
+	color: #CCC;
+}
 
 
 
@@ -67,7 +143,11 @@ body {
 }
 
 #right-menu-top-header h1{
+	font-family: Roboto, sans-serif;
 	font-size: 22px;
+	font-weight: 600;
+	letter-spacing: .1px;
+	color: #171820;
 }
 
 #right-menu-middle {
@@ -77,11 +157,12 @@ body {
 
 
 .button-object {
-	border: none;
+	font-family: Roboto, sans-serif;
 	background-color: transparent;
 	border: 1px solid #D1D5DA;
 	border-radius: 5px;
-	padding: 4px 35px;
+	padding: 4px 5px;
+	width: 60%;
 	font-size: 16px;
 	margin: 5px;
 	color: #0366D6;
@@ -111,8 +192,7 @@ body {
 .div-object-counter {
 	position: absolute;
 	top: 20;
-	right: 40;
-	background-color: green;
+	right: 25;
 	height: 15px;
 	margin: 0 auto;
 `	margin-top: 5px;

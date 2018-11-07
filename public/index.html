@@ -3,35 +3,54 @@
     <meta charset="UTF-8">
     <title>Pac-Man Multiplayer</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
- 
-    <div id="mainBoard"></div>
+	<div id="wrapper">
 	
-	
-	
-	
-	<div id="left-menu">
-		<button type="button" id="button-reset-map">Reset Map</button>
-		<button type="button" id="button-load-map">Load Map</button>
-		<button type="button" id="button-save-map">Save Map</button>
-		<button type="button" id="button-menu">Menu</button>
-	</div>
+		<div id="left-menu">
+			<div id="left-menu-top-header">
+				<h1>Menu</h1>
+			</div>
+			<div id="left-menu-middle">
+				<button type="button" id="button-reset-map"><i class="fas fa-sync-alt"></i>Reset Map</button>
+				<button type="button" id="button-load-map"><i class="fas fa-download"></i>Load Map</button>
+				<button type="button" id="button-save-map"><i class="fas fa-save"></i>Save Map</button>
+			</div>
+			<footer>
+				<p>Pac-Man Multiplayer</p>
+			</footer>
+		</div>
 
-	<div id="right-menu">
-		<div id="right-menu-top-header">
-			<h1>Object Selection</h1>
+		
+			
+		<div id="mainBoard"></div>
+		
+		
+		<div id="right-menu">
+			<div id="right-menu-top-header">
+				<h1>Object Selection</h1>
+			</div>
+			<div id="right-menu-middle">
+					<div><button type="button" id="button-object-wall" value="WALL" class="button-object">Wall</button><div class="div-object-counter"><p class="p-object-counter">625</p></div></div>
+					<div><button type="button" id="button-object-point" value="POINT" class="button-object">Point</button></div>
+					<div><button type="button" id="button-object-pacman" value="PACMAN" class="button-object">Pac-Man</button></div>
+			</div>
 		</div>
-		<div id="right-menu-middle">
-				<div><button type="button" id="button-object-wall" value="WALL" class="button-object">Wall</button><div class="div-object-counter"><p class="p-object-counter">625</p></div></div>
-				<div><button type="button" id="button-object-point" value="POINT" class="button-object">Point</button></div>
-				<div><button type="button" id="button-object-pacman" value="PACMAN" class="button-object">Pac-Man</button></div>
-		</div>
-	</div>
+    </div>
+
+
+	
+
+
+		
+	
+	
 	
 	<script src="js/MapHandler.js"></script>
 	<script src="js/Game.js"></script>
+	<script src="js/ContextMenu.js"></script>
 </body>
 </html>

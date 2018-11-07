@@ -4,15 +4,13 @@ window.onload=function() {
 }
 
 // Variable initialization
+let wrapper = document.querySelector('#wrapper');
 let c = document.querySelector('#mainBoard');
 c.addEventListener('mouseleave', mouseLeaveEvent);
-c.oncontextmenu = () => { return false; }
-c.ondragstart = () => { return false; }
 
 let buttonResetMap = document.querySelector('#button-reset-map');
 let buttonLoadMap = document.querySelector('#button-load-map');
 let buttonSaveMap = document.querySelector('#button-save-map');
-let buttonMenu = document.querySelector('#button-menu');
 
 buttonResetMap.addEventListener('click', resetMap);
 buttonLoadMap.addEventListener('click', loadMap);
